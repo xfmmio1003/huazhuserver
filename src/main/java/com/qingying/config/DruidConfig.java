@@ -11,6 +11,7 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.core.annotation.Order;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import java.sql.SQLException;
  * @Date 2019/4/23 23:50
  */
 @Configuration
+@Order(2)
 public class DruidConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(DruidConfig.class);

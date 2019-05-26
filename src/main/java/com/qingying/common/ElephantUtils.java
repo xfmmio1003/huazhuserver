@@ -1,6 +1,8 @@
 package com.qingying.common;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Author: Elephant
@@ -43,5 +45,41 @@ public class ElephantUtils {
         genMsgId("8000201");
     }*/
 
+    /**
+     * 将操作系统时间同步成指定的Date
+     * @param date
+     */
+    public static void synSystemTime(Date date){
+        try {
+            String cmd = "";
+            String osName = System.getProperty("os.name");
+            System.out.println(osName);
+            if (osName.matches("^(?i)Windows.*$")) {
+                System.out.println("windows");
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
+                //cmd = "cmd /c date 2019-04-25";
+                cmd = "cmd /c date "+formatDate.format(date);
+                Runtime.getRuntime().exec(cmd);
 
+                SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
+                cmd = "cmd /c time "+formatTime.format(date);
+                Runtime.getRuntime().exec(cmd);
+
+            } else {
+                System.out.println("Linux");
+                SimpleDateFormat formatDate = new SimpleDateFormat("yyyyMMdd");
+                //cmd = "date -s 20190425";
+                cmd = "date -s "+formatDate.format(date);
+                Runtime.getRuntime().exec(cmd);
+
+                //HH:mm:ss
+                SimpleDateFormat formatTime = new SimpleDateFormat("HH:mm:ss");
+                cmd = "date -s "+formatTime.format(date);
+                Runtime.getRuntime().exec(cmd);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.qingying.mapper.RoomOrderMapper">
+
+    <insert id="addRoomOrder" >
+        INSERT INTO qy_roomorder(hotelid,roomno,businesskey,actiontype,checkin,lastcheckout,checkout,status,createtime,updatetime)
+        VALUES (#{hotelid},#{roomno},#{businesskey},#{actiontype},#{checkin},#{lastcheckout},#{checkout},#{status},#{createtime},#{updatetime})
+    </insert>
+
+    <update id="updateRoomOrderStatusById">
+        update qy_roomorder set status = #{status},updatetime = now() where id = #{id}
+    </update>
+
+    <update id="updateRoomOrderStatusByBusinesskey">
+        update qy_roomorder set status = #{status},updatetime = now() where roomno = #{roomno} and businesskey = #{businesskey}
+    </update>
+
+    <select id="queryOrderListByRoomNo" resultType="com.qingying.model.RoomOrder">
+        select * from qy_roomorder a where 1=1 and roomno = #{roomno}
+        <if test="actiontype != null">
+            and actiontype = #{actiontype}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+
+    </select>
+
+</mapper>
